@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Monstercat Project - Song</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header class="p-3">
+            <img src="monstercat.png" height="100">
+            <h1>Monstercat Project</h1>
+        </header>
+        <section class="m-3">
+            <h2 class="p-2">Alta de canción <i class="fas fa-address-card"></i></h2>
+            <form action="" class="p-3" id="songForm">
+                <p>Título</p>
+                <input type="text" placeholder="Ingrese un título" id="title">
+                <p>Artista/s</p>
+                <input type="number" placeholder="Ingrese uno o más artistas" id="artists">
+                <p>Artista/s colaborador/es</p>
+                <input type="number" placeholder="Ingrese uno o más artistas colaboradores o ninguno si no corresponde" id="featuredArtists">
+                <p>Remixeador/es</p>
+                <input type="number" placeholder="Ingrese uno o más remixeadores o ninguno si no corresponde" id="remixers">
+                <p>Fecha de lanzamiento</p>
+                <input type="date" placeholder="Ingrese una fecha de lanzamiento" id="releaseDate">
+                <label for="songForm">Género</label>
+                <select name="genres" id="genre"></select>
+                <p>Duración (minutos)</p>
+                <input type="number" placeholder="Ingrese la cantidad de minutos enteros" id="minutes">
+                <p>Duración (segundos)</p>
+                <input type="number" placeholder="Ingrese la cantidad de segundos" id="seconds">
+                <p>Número de Catálogo</p>
+                <input type="text" placeholder="Ingrese el Número de catálogo" id="catalogNumber">
+            </form>
+            <div id="buttons">
+                <button class="m-2" onclick="location.reload()">CANCELAR</button>
+                <button class="m-2" onclick="create()">GUARDAR</button>
+            </div>
+        </section>
+        
+        <script src="createSong.js"></script>
+    </body>
+</html>
