@@ -1,5 +1,5 @@
 const request = new XMLHttpRequest()
-const url = "http://localhost:8080/api/genre"
+const url = "http://localhost:8080/api/enums/genres"
 request.open('GET', url)
 request.send()
 request.addEventListener("readystatechange", () => {

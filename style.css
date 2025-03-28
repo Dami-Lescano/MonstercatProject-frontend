@@ -7,6 +7,31 @@ body {
    background-color: var(--primary-color);
    color: var(--secondary-color);
 }
+h2 {
+    color: var(--tertiary-color);
+}
+/*Header*/
+h1{
+    align-self: center;
+}
+a, ul{
+    text-decoration: none;
+    list-style-type: none;
+    color: var(--secondary-color);
+}
+a:hover{
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+ul{
+    display: flex;
+    justify-content: space-between;
+    align-content: baseline;
+    margin-bottom: 0%;
+}
+li{
+    padding-right: 2rem;
+}
 header {
     background-color: var(--primary-color);
     color: var(--secondary-color);
@@ -14,7 +39,4 @@ header {
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
-}
-h2 {
-    color: var(--tertiary-color);
 }
