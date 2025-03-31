@@ -6,14 +6,12 @@ request.addEventListener("readystatechange", () => {
     if(request.readyState === 4){
         if(request.status == 200){
             const genres = JSON.parse(request.response)
-            console.log(genres)
             genres.forEach(element => {
-                console.log(element)
-                var select = document.getElementById("country");
-                var option = document.createElement("option");
-                option.text = element.name;
-                option.value = element.country;
-                select.add(option);
+                var select = document.getElementById("country")
+                var option = document.createElement("option")
+                option.text = element.name
+                option.value = element.country
+                select.add(option)
             })
         }
         else {
@@ -22,12 +20,15 @@ request.addEventListener("readystatechange", () => {
     }
 })
 
+localStorage.setItem("namesCant", 1)
+
+
 
 const create = () => {
     const artistName = document.getElementById("artistName").value
-    const realName = ["Damián Lescano"]//document.getElementById("artists").value
+    const realName = readRealNames()//["Damián Lescano"]//document.getElementById("artists").value
     const birthDate = document.getElementById("birthDate").value
-    const country = "ARGENTINA"//document.getElementById("country").value
+    const country = document.getElementById("country").value
     const initYear = document.getElementById("initYear").value
     const endYear = document.getElementById("endYear").value
     
@@ -68,27 +69,32 @@ const create = () => {
     
 }
 
-const cifrar = (str, val = 13) => {
-
-    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    let current 
-    let caesars = ""
-
-    for(let i = 0; i < str.length; i++){
-        if(letters.includes(str[i])){
-            current = str[i].charCodeAt(0) + val
-            if (current > 90){
-                current -= 26
-                }
-            else if(current < 65){
-                current +=26
-                }
-            caesars += String.fromCharCode(current)
-            }
-        else{
-            caesars += str[i]
+const readRealNames = () => {
+    var seguir = true
+    var realNameId = "realName1"
+    const realNames = []
+    while (seguir) {
+        try {
+            var name = document.getElementById(realNameId).value
+            realNames.push(name)
+            realNameId = realNameId + "1"
         }
+        catch {
+            seguir = false
+        }
+        console.log(realNames)
     }
-    return caesars
+    return realNames
+}
 
+const addName = () => {
+    const numeroNombre = localStorage.getItem("namesCant") + 1
+    console.log(numeroNombre)
+    var names = document.getElementById("realNames")
+    var name = document.createElement("input")
+    name.type = "text"
+    name.placeholder = "Ingrese el nombre real"
+    name.id = "realName" + numeroNombre
+    names.appendChild(name)
+    localStorage.setItem("namesCant", numeroNombre)
 }

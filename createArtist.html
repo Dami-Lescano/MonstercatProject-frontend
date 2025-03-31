@@ -8,15 +8,19 @@
     </head>
     <body>
         <header id="header">
-            <script src="header.js">loadHeader()</script>
+            <script src="header.js"></script>
         </header>
         <section class="m-3">
             <h2 class="p-2">Alta de Artista <i class="fas fa-address-card"></i></h2>
             <form action="" class="p-3" id="artistForm">
                 <p>Nombre de artista</p>
                 <input type="text" placeholder="Ingrese el nombre del artista" id="artistName">
-                <p>Artista/s</p>
-                <input type="text" placeholder="Ingrese el nombre real" id="realName">
+                <p>Nombre real</p>
+                <button type="button" onclick="addName()">Agregar Nombre</button>
+                <div id="realNames">
+                    <input type="text" placeholder="Ingrese el nombre real" id="realName1">
+                </div>
+                
                 <p>Fecha de nacimiento</p>
                 <input type="date" placeholder="Ingrese una fecha de nacimiento" id="birthDate">
                 <label for="artistForm">País</label>
@@ -27,8 +31,8 @@
                 <input type="number" placeholder="Ingrese el año de fin" id="endYear">
             </form>
             <div id="buttons">
-                <button class="m-2" onclick="location.reload()">CANCELAR</button>
-                <button class="m-2" onclick="create()">GUARDAR</button>
+                <button onclick="location.reload()">CANCELAR</button>
+                <button onclick="create()">GUARDAR</button>
             </div>
         </section>
         
