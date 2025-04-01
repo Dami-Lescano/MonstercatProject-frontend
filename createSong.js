@@ -1,3 +1,9 @@
+localStorage.setItem("artistsCant", "1")
+localStorage.setItem("featuredArtistsCant", "")
+localStorage.setItem("remixersCant", "")
+
+var artistSelect
+
 const request = new XMLHttpRequest()
 const url = "http://localhost:8080/api/enums/genres"
 request.open('GET', url)
@@ -22,10 +28,46 @@ request.addEventListener("readystatechange", () => {
     }
 })
 
+const requestDos = new XMLHttpRequest()
+const urlDos = "http://localhost:8080/api/artist/namesAndIds"
+requestDos.open('GET', urlDos)
+requestDos.send()
+requestDos.addEventListener("readystatechange", () => {
+    if(requestDos.readyState === 4){
+        if(requestDos.status == 200){
+            const artists = JSON.parse(requestDos.response)
+            console.log(requestDos)
+            
+            var artist = document.getElementById("artist1");
+
+            var option = document.createElement("option");
+            option.text = "No especificado";
+            option.value = 0;
+            artist.add(option);
+
+            artists.forEach(element => {
+                console.log(element)
+                
+                var option = document.createElement("option");
+                option.text = element.artistName;
+                option.value = element.artistId;
+                artist.add(option);
+            })
+
+            console.log("artists select ", artist)
+            artistSelect = artist
+        }
+        else {
+            alert("No se pudo fetchear los artistas")
+        }
+    }
+})
 
 const create = () => {
     const title = document.getElementById("title").value
-    const artists = [{artistId: 4}]//document.getElementById("artists").value
+    const artists = readArtists("artist")
+    const featuredArtists = readArtists("featuredArtist")
+    const remixers = readArtists("remixer")
     const releaseDate = document.getElementById("releaseDate").value
     const genre = document.getElementById("genre").value
     const minutes = document.getElementById("minutes").value
@@ -39,6 +81,8 @@ const create = () => {
     const song = {
         title: title,
         artists: artists,
+        featuredArtists: featuredArtists,
+        remixers: remixers,
         genre: genre,
         releaseDate: releaseDate,
         length: length,
@@ -70,27 +114,34 @@ const create = () => {
     
 }
 
-const cifrar = (str, val = 13) => {
+const addArtist = (type) => {
+    const numeroArtista = localStorage.getItem(type + "sCant") + 1
+    console.log(numeroArtista)
+    var artistType = document.getElementById(type + "s")
+    var artistNuevo = artistSelect.cloneNode(true)
+    artistNuevo.id = type + numeroArtista
+    console.log("artist type ", artistType)
+    artistType.appendChild(artistNuevo)
+    localStorage.setItem(type + "sCant", numeroArtista)
+}
 
-    let letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    let current 
-    let caesars = ""
-
-    for(let i = 0; i < str.length; i++){
-        if(letters.includes(str[i])){
-            current = str[i].charCodeAt(0) + val
-            if (current > 90){
-                current -= 26
-                }
-            else if(current < 65){
-                current +=26
-                }
-            caesars += String.fromCharCode(current)
+const readArtists = (type) => {
+    var seguir = true
+    var artistSelectId = type + "1"
+    const artists = []
+    while (seguir) {
+        try {
+            var artistId = document.getElementById(artistSelectId).value
+            const artist = {
+                artistId: artistId
             }
-        else{
-            caesars += str[i]
+            artists.push(artist)
+            artistSelectId = artistSelectId + "1"
         }
+        catch {
+            seguir = false
+        }
+        console.log(artists)
     }
-    return caesars
-
+    return artists
 }
