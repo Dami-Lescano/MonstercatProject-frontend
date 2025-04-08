@@ -1,35 +1,16 @@
-/*if(localStorage.song == null){
-    localStorage.setItem("song", "")
-}
-const ordenar = (song = '') => {
-    localStorage.setItem("song", song)
-}
+const urlParams = new URLSearchParams(window.location.search);
+const songId = urlParams.get('songId');
 
-localStorage.setItem("search", "")
-
-
-document.getElementById('search-field').value = ""
-
-*/
 const request = new XMLHttpRequest()
-const url = "http://localhost:8080/api/song/info/46"
-request.open('GET', url) //+ localStorage.getItem("ruta"))
-//request.setRequestHeader("Content-type", "application/json")
+const url = `http://localhost:8080/api/song/info/${songId}`
+request.open('GET', url)
 request.send()
 
-
-
-
-
 request.addEventListener("readystatechange", () =>{
-    let song = ''
     if(request.readyState === 4){
         if(request.status == 200){
-            console.log(request.response)
-            //const jason = JSON.parse(request.response).users.map(e => e.Nombre + ' ' + e.Apellido)
+            let song = ''
             const response = JSON.parse(request.response)
-            //const total = jason.length
-            //document.getElementById('total').innerHTML = `<i class="fas fa-search"></i> Total: ${total}`
             song += `
                         <img src="monstercat-placeholder.png" height="250">
                         <h2 >Título: ${response.title}</h2>
@@ -41,35 +22,11 @@ request.addEventListener("readystatechange", () =>{
                         <h2 >Número de catálogo: ${response.catalogNumber == null ? "N/A" : `${response.catalogNumber}`}</h2>
                         <h2 >ID: ${response.songId}</h2>
                     `
-            /*jason.forEach( e => {
-                user_string += `
-
-                        <div class="grid-item"><p class="grid-user">${e.usuario_logeado}</p></div>
-                        <div class="grid-item"><p class="grid-user">${e.resumen_descarga}</p></div>
-                        <div class="grid-item"><p class="grid-user">${e.resumen_positivo}</p></div>
-                        <div class="grid-item"><p class="grid-user">${e.resumen_negativo}</p></div>
-                        <div class="grid-item"><p class="grid-user">${e.puntaje_global}</p></div>
-                    `
-            })*/
             document.getElementById("song").innerHTML = song
         }
         else{
             document.getElementById("song").innerHTML = "Error " + request.status
         }
-        /* localStorage.setItem("busqueda", "0") */
     }
     
 })
-
-const clicker = () =>{
-    let busqueda = document.getElementById("search-field").value
-    console.log("valor de busqueda: " + busqueda)
-    if(busqueda == '' || busqueda == null){
-        alert("el cuadro de busqueda esta vacio")
-        location.reload()
-        return
-    }
-    else {
-        localStorage.setItem("busqueda", busqueda)
-    }
-}
