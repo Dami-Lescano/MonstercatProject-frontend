@@ -20,7 +20,7 @@ a, ul{
     color: var(--secondary-color);
 }
 a:hover{
-    color: var(--secondary-color);
+    color: var(--tertiary-color);
     text-decoration: underline;
 }
 ul{
@@ -31,6 +31,8 @@ ul{
 }
 li{
     padding-right: 2rem;
+    display: flex;
+    align-items: center;
 }
 header {
     background-color: var(--primary-color);
@@ -39,4 +41,7 @@ header {
     margin-bottom: 5px;
     display: flex;
     flex-direction: row;
+}
+.info{
+    margin: 3em;
 }
