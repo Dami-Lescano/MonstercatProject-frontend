@@ -16,17 +16,22 @@
                 <p>Título</p>
                 <input type="text" placeholder="Ingrese un título" id="title">
                 <p>Artista/s</p>
-                <button type="button" onclick="addArtist('artist')">Agregar Artista</button>
+                
                 <div id="artists">
-                    <select id="artist1"></select>
+                    <select id="artistSelect"></select>
+                    <button type="button" onclick="addArtist('artist')">Agregar Artista</button>
                 </div>
                 <p>Artista/s colaborador/es</p>
-                <button type="button" onclick="addArtist('featuredArtist')">Agregar Artista Colaborador</button>
+                
                 <div id="featuredArtists">
+                    <select id="featuredArtistSelect"></select>
+                    <button type="button" onclick="addArtist('featuredArtist')">Agregar Artista Colaborador</button>
                 </div>
                 <p>Remixer/s</p>
-                <button type="button" onclick="addArtist('remixer')">Agregar Remixer</button>
+                
                 <div id="remixers">
+                    <select id="remixerSelect"></select>
+                    <button type="button" onclick="addArtist('remixer')">Agregar Remixer</button>
                 </div>
                 <p>Fecha de lanzamiento</p>
                 <input type="date" placeholder="Ingrese una fecha de lanzamiento" id="releaseDate">
