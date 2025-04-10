@@ -1,3 +1,6 @@
+var namesId = 100
+var namesChipsIds = []
+
 const request = new XMLHttpRequest()
 const url = "http://localhost:8080/api/enums/countries"
 request.open('GET', url)
@@ -20,13 +23,9 @@ request.addEventListener("readystatechange", () => {
     }
 })
 
-localStorage.setItem("namesCant", 1)
-
-
-
 const create = () => {
     const artistName = document.getElementById("artistName").value
-    const realName = readRealNames()//["Damián Lescano"]//document.getElementById("artists").value
+    const realName = readNames()
     const birthDate = document.getElementById("birthDate").value
     const country = document.getElementById("country").value
     const initYear = document.getElementById("initYear").value
@@ -69,32 +68,43 @@ const create = () => {
     
 }
 
-const readRealNames = () => {
-    var seguir = true
-    var realNameId = "realName1"
-    const realNames = []
-    while (seguir) {
-        try {
-            var name = document.getElementById(realNameId).value
-            realNames.push(name)
-            realNameId = realNameId + "1"
-        }
-        catch {
-            seguir = false
-        }
-        console.log(realNames)
+const addName = () => {
+    const nameInput = document.getElementById("realName")
+    const name = nameInput.value
+    if(name == "") {
+        //TODO: agregar cheque de nombres iguales.
+        return
     }
-    return realNames
+    const realNamesDiv = document.getElementById("realNames")
+
+    const newNameChip = document.createElement("div")
+    newNameChip.className = "chip"
+    newNameChip.id = namesId
+    newNameChip.innerHTML = `<button type="button" onClick="removeName(${namesId})"></button>${name}`
+
+    console.log("newNameChip ", newNameChip)
+
+    realNamesDiv.appendChild(newNameChip)
+
+    nameInput.value = ""
+    namesChipsIds.push(namesId)
+    console.log("ids", namesChipsIds)
+    namesId = namesId + 1
+
 }
 
-const addName = () => {
-    const numeroNombre = localStorage.getItem("namesCant") + 1
-    console.log(numeroNombre)
-    var names = document.getElementById("realNames")
-    var name = document.createElement("input")
-    name.type = "text"
-    name.placeholder = "Ingrese el nombre real"
-    name.id = "realName" + numeroNombre
-    names.appendChild(name)
-    localStorage.setItem("namesCant", numeroNombre)
+const readNames = () => {
+    const names = []
+    namesChipsIds.forEach(id => {
+        const nameChip = document.getElementById(id)
+        names.push(nameChip.innerText)
+    })
+    console.log("names ", names)
+    return names
+}
+
+const removeName = (id) => {
+    document.getElementById(id).remove()
+    namesChipsIds = namesChipsIds.filter(c => c != id)
+    console.log("ids", namesChipsIds)
 }
