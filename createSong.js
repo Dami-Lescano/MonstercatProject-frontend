@@ -1,7 +1,3 @@
-localStorage.setItem("artistsCant", "1")
-localStorage.setItem("featuredArtistsCant", "")
-localStorage.setItem("remixersCant", "")
-
 const selectedArtistsIds = []
 const selectedFeaturedArtistsIds = []
 const selectedRemixersIds = []
@@ -14,9 +10,7 @@ request.addEventListener("readystatechange", () => {
     if(request.readyState === 4){
         if(request.status == 200){
             const genres = JSON.parse(request.response)
-            console.log(genres)
             genres.forEach(element => {
-                console.log(element)
                 var select = document.getElementById("genre");
                 var option = document.createElement("option");
                 option.text = element.name;
@@ -39,10 +33,6 @@ requestDos.addEventListener("readystatechange", () => {
         if(requestDos.status == 200){
             let artists = [{artistId: 0, artistName: "No especificado"}]
             artists = artists.concat(JSON.parse(requestDos.response))
-            console.log(requestDos)
-            
-            
-            //const artistTypes = ["artist", "featuredArtist", "remixer"]
 
             const artistSelect = document.getElementById("artistSelect");
             const featuredArtistSelect = document.getElementById("featuredArtistSelect");
@@ -50,24 +40,17 @@ requestDos.addEventListener("readystatechange", () => {
 
             const artistSelects = [artistSelect, featuredArtistSelect, remixerSelect]
 
-            //artistTypes.forEach(artistType => {
-                artists.forEach(artist => {
-                    console.log(artist)
-                    
-                    
-                    artistSelects.forEach(artistSelect => {
-                        var option = document.createElement("option");
-                        option.text = artist.artistName;
-                        option.value = artist.artistId;
-                        option.id = artistSelect.id + "Option" + artist.artistId
-                        option.disabled = false//selectedArtistsIds.includes(artist.artistId) ? true : false
-                        artistSelect.add(option);
-                    })
-                    
+            artists.forEach(artist => {
+                artistSelects.forEach(artistSelect => {
+                    var option = document.createElement("option");
+                    option.text = artist.artistName;
+                    option.value = artist.artistId;
+                    option.id = artistSelect.id + "Option" + artist.artistId
+                    option.disabled = false//selectedArtistsIds.includes(artist.artistId) ? true : false
+                    artistSelect.add(option);
                 })
-            //})
-            //console.log("artists select ", artist)
-            //artistSelect = artist
+                
+            })
         }
         else {
             alert("No se pudo fetchear los artistas")
@@ -101,8 +84,6 @@ const create = () => {
         catalogNumber: catalogNumber
     }
 
-    console.log("song ", song)
-
     request.open('POST', url)
     request.setRequestHeader('Content-Type', 'application/json')
     let body = JSON.stringify(song)
@@ -112,7 +93,6 @@ const create = () => {
     request.addEventListener("readystatechange", () =>{
         if(request.readyState === 4){
             if(request.status == 200){
-                console.log(request.response)
                 alert("Canción creada exitosamente")
                 location.reload(false)
             }
@@ -139,8 +119,6 @@ const addArtist = (type) => {
     newArtistChip.className = "chip"
     newArtistChip.id = artistId
     newArtistChip.innerHTML = `<button type="button" onClick="removeArtist(${artistId})"></button>${artistName}`
-
-    console.log("newArtistChip ", newArtistChip)
     
     checkOtherSelects(artistId)
 
@@ -157,16 +135,6 @@ const addArtist = (type) => {
     else {
         selectedRemixersIds.push(artistId)
     }
-    console.log("artistsDiv ", artistsDiv.children)
-
-    /*const numeroArtista = localStorage.getItem(type + "sCant") + 1
-    console.log(numeroArtista)
-    var artistType = document.getElementById(type + "s")
-    var artistNuevo = artistSelect.cloneNode(true)
-    artistNuevo.id = type + numeroArtista
-    console.log("artist type ", artistType)
-    artistType.appendChild(artistNuevo)
-    localStorage.setItem(type + "sCant", numeroArtista)*/
 }
 
 const removeArtist = (id) => {
@@ -182,8 +150,6 @@ const toggleDisableOption = (id, bool) => {
     artistOption.disabled = bool
     featuredArtistOption.disabled = bool
     remixerOption.disabled = bool
-
-    //console.log
 }
 
 const checkOtherSelects = (id) => {
@@ -234,23 +200,3 @@ const readRemixers = () => {
     })
     return artists;
 }
-/*const readArtists = (type) => {
-    var seguir = true
-    var artistSelectId = type + "1"
-    const artists = []
-    while (seguir) {
-        try {
-            var artistId = document.getElementById(artistSelectId).value
-            const artist = {
-                artistId: artistId
-            }
-            artists.push(artist)
-            artistSelectId = artistSelectId + "1"
-        }
-        catch {
-            seguir = false
-        }
-        console.log(artists)
-    }
-    return artists
-}*/
