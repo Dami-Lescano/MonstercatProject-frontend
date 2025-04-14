@@ -118,7 +118,7 @@ const addArtist = (type) => {
     const newArtistChip = document.createElement("div")
     newArtistChip.className = "chip"
     newArtistChip.id = artistId
-    newArtistChip.innerHTML = `<button type="button" onClick="removeArtist(${artistId})"></button>${artistName}`
+    newArtistChip.innerHTML = `<button type="button" onClick="removeArtist(${artistId})">X</button>${artistName}`
     
     checkOtherSelects(artistId)
 

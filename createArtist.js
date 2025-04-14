@@ -80,7 +80,7 @@ const addName = () => {
     const newNameChip = document.createElement("div")
     newNameChip.className = "chip"
     newNameChip.id = namesId
-    newNameChip.innerHTML = `<button type="button" onClick="removeName(${namesId})"></button>${name}`
+    newNameChip.innerHTML = `<button type="button" onClick="removeName(${namesId})">X</button>${name}`
 
     console.log("newNameChip ", newNameChip)
 

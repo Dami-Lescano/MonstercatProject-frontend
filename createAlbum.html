@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Monstercat Project - Song</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header id="header">
+            <script src="header.js"></script>
+        </header>
+        <section class="m-3">
+            <h2 class="p-2">Alta de Album <i class="fas fa-address-card"></i></h2>
+            <form action="" class="p-3" id="albumForm">
+                <p>Título</p>
+                <input type="text" placeholder="Ingrese un título" id="title">
+                <p>Canciones</p>
+                
+                <div id="songs">
+                    <select id="songSelect"></select>
+                    <button type="button" onclick="addSong()">Agregar Canción</button>
+                </div>
+                <p>Fecha de lanzamiento</p>
+                <input type="date" placeholder="Ingrese una fecha de lanzamiento" id="releaseDate">
+                <p>Número de Catálogo</p>
+                <input type="text" placeholder="Ingrese el Número de catálogo" id="catalogNumber">
+            </form>
+            <div id="buttons">
+                <button class="m-2" onclick="location.reload()">CANCELAR</button>
+                <button class="m-2" onclick="create()">GUARDAR</button>
+            </div>
+        </section>
+        
+        <script src="createAlbum.js"></script>
+    </body>
+</html>
