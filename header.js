@@ -12,10 +12,16 @@ let header = `
             <a href="artistsList.html">Artistas</a>
         </li>
         <li>
+            <a href="albumsList.html">Álbumes</a>
+        </li>
+        <li>
             <a href="createSong.html"">Crear canción</a>
         </li>
         <li>
             <a href="createArtist.html">Crear Artista</a>
+        </li>
+        <li>
+            <a href="createAlbum.html">Crear Álbum</a>
         </li>
     </ul>`
 document.getElementById("header").innerHTML = header
