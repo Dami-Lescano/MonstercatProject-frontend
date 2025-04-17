@@ -2,6 +2,8 @@ const selectedArtistsIds = []
 const selectedFeaturedArtistsIds = []
 const selectedRemixersIds = []
 
+const artistsIdsLists = [selectedArtistsIds, selectedFeaturedArtistsIds, selectedRemixersIds]
+
 const request = new XMLHttpRequest()
 const url = "http://localhost:8080/api/enums/genres"
 request.open('GET', url)
@@ -139,6 +141,15 @@ const addArtist = (type) => {
 const removeArtist = (id) => {
     document.getElementById(id).remove()
     toggleDisableOption(id, false)
+
+    artistsIdsLists.forEach(list => {
+        const index = list.indexOf(id.toString())
+        if (index > -1) {
+            list.splice(index, 1)
+        }
+    })
+
+    
 }
 
 const toggleDisableOption = (id, bool) => {
