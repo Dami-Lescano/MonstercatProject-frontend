@@ -24,15 +24,14 @@ request.addEventListener("readystatechange", () => {
     }
 })
 
-const requestDos = new XMLHttpRequest()
-const urlDos = "http://localhost:8080/api/artist/namesAndIds"
-requestDos.open('GET', urlDos)
-requestDos.send()
-requestDos.addEventListener("readystatechange", () => {
-    if(requestDos.readyState === 4){
-        if(requestDos.status == 200){
+const requestArtists = new XMLHttpRequest()
+requestArtists.open('GET', "http://localhost:8080/api/artist/namesAndIds")
+requestArtists.send()
+requestArtists.addEventListener("readystatechange", () => {
+    if(requestArtists.readyState === 4){
+        if(requestArtists.status == 200){
             let artists = [{artistId: 0, artistName: "No especificado"}]
-            artists = artists.concat(JSON.parse(requestDos.response))
+            artists = artists.concat(JSON.parse(requestArtists.response))
 
             const artistSelect = document.getElementById("artistSelect");
             const featuredArtistSelect = document.getElementById("featuredArtistSelect");

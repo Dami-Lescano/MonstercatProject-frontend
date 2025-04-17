@@ -19,6 +19,7 @@ request.addEventListener("readystatechange", () =>{
                         ${response.remixers.length > 0 ? `<h2 >Remixers: ${response.remixers}</h2>` : ""}
                         <h2 >Duración: ${response.length}</h2>
                         <h2 >Género: ${response.genre}</h2>
+                        <h2 >Fecha de Lanzamiento: ${response.releaseDate}</h2>
                         <h2 >Número de catálogo: ${response.catalogNumber == null ? "N/A" : `${response.catalogNumber}`}</h2>
                         <h2 >ID: ${response.songId}</h2>
                     `
