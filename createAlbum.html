@@ -13,10 +13,22 @@
         <section class="m-3">
             <h2 class="p-2">Alta de Album <i class="fas fa-address-card"></i></h2>
             <form action="" class="p-3" id="albumForm">
-                <p>Título</p>
-                <input type="text" placeholder="Ingrese un título" id="title">
-                <p>Canciones</p>
+                <label for="albumForm">Tipo de Álbum</label>
+                <select onchange="albumTypeChanged(value)" name="type" id="type">
+                    <option value="compilationAlbum">Compilación</option>
+                    <option value="artistAlbum">Álbum de artista</option>
+                </select><p></p>
+                <div id="albumTypeFields">
+                    <label for="songForm">Tipo de Compilación</label>
+                    <select name="compilationType" id="compilationType"></select><p></p>
+                    <div id="compilationTypeFields">
+                        <p>Título</p>
+                        <input type="text" placeholder="Ingrese un título" id="title">
+                    </div>
+                </div>
                 
+                
+                <p>Canciones</p>
                 <div id="songs">
                     <select id="songSelect"></select>
                     <button type="button" onclick="addSong()">Agregar Canción</button>
