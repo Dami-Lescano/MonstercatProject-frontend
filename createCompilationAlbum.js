@@ -1,12 +1,15 @@
 const selectedSongsIds = []
 
-const fecthSongs = (artistId) => {
+const fecthSongs = (filterType, value) => {
     let url
-    if (artistId == 0) {
+    if (filterType == "MONSTERCAT_COMPILATION") {
         url = "http://localhost:8080/api/song/songsItems"
     }
+    else if (filterType == "BEST_OF_YEAR") {
+        url = `http://localhost:8080/api/song/songsItems/year/${value}`
+    }
     else {
-        url = `localhost:8080/api/artist/${artistId}/songs`
+        url = `http://localhost:8080/api/song/songsItems/genre/${value}`
     }
     const request = new XMLHttpRequest()
     request.open('GET', url)
@@ -14,16 +17,19 @@ const fecthSongs = (artistId) => {
     request.addEventListener("readystatechange", () => {
         if(request.readyState === 4){
             if(request.status == 200){
+                const songSelect = document.getElementById("songSelect");
+                songSelect.innerHTML = ``
+
                 let songs = [{id: 0, fullName: "No especificado"}]
                 songs = songs.concat(JSON.parse(request.response))
-
+                
                 songs.forEach(element => {
-                    var select = document.getElementById("songSelect");
-                    var option = document.createElement("option");
+                    
+                    const option = document.createElement("option");
                     option.text = element.fullName;
                     option.value = element.id;
                     option.id = "option" + element.id;
-                    select.add(option);
+                    songSelect.add(option);
                 })
             }
             else {
@@ -34,6 +40,30 @@ const fecthSongs = (artistId) => {
     })
 }
 
+const genreSelect = document.createElement("select")
+genreSelect.id = "genreSelect"
+genreSelect.onchange = () => fecthSongs("BEST_OF_GENRE", genreSelect.value)
+
+const request = new XMLHttpRequest()
+const url = "http://localhost:8080/api/enums/genres"
+request.open('GET', url)
+request.send()
+request.addEventListener("readystatechange", () => {
+    if(request.readyState === 4){
+        if(request.status == 200){
+            const genres = JSON.parse(request.response)
+            genres.forEach(element => {
+                var option = document.createElement("option");
+                option.text = element.name;
+                option.value = element.genre;
+                genreSelect.add(option);
+            })
+        }
+        else {
+            alert("No se pudo fetchear los generos")
+        }
+    }
+})
 
 const requestCompilation = new XMLHttpRequest()
 requestCompilation.open('GET', "http://localhost:8080/api/enums/compilationTypes")
@@ -56,62 +86,47 @@ requestCompilation.addEventListener("readystatechange", () => {
     }
 })
 
-const artistChanged = (artistId) => {
-    fecthSongs(artistId)
-}
+fecthSongs("MONSTERCAT_COMPILATION", null)
 
-const artistSelect = document.createElement("select")
-artistSelect.id = "artistSelect"
-artistSelect.onchange = artistChanged(artistSelect.value)
-
-const requestArtists = new XMLHttpRequest()
-requestArtists.open('GET', "http://localhost:8080/api/artist/namesAndIds")
-requestArtists.send()
-requestArtists.addEventListener("readystatechange", () => {
-    if(requestArtists.readyState === 4){
-        if(requestArtists.status == 200){
-            let artists = [{artistId: 0, artistName: "No especificado"}]
-            artists = artists.concat(JSON.parse(requestArtists.response))
-
-            artists.forEach(artist => {
-                var option = document.createElement("option");
-                option.text = artist.artistName;
-                option.value = artist.artistId;
-                option.id = "artistOption" + artist.artistId
-                artistSelect.add(option);
-            })
-                
-        }
-        else {
-            alert("No se pudo fetchear los artistas")
-        }
+const compilationTypeChanged = (type) => {
+    const compilationTypeFieldsDiv = document.getElementById("compilationTypeFields")
+    const title = document.getElementById("title")
+    if (type == "MONSTERCAT_COMPILATION") {
+        compilationTypeFieldsDiv.innerHTML = ""
+        fecthSongs(type, null)
+        title.value = "Monstercat XXX - X"
     }
-})
-
-fecthSongs(0)
-
-const albumTypeChanged = (type) => {
-    let albumTypeFieldsDiv = document.getElementById("albumTypeFields")
-    if (type == "artistAlbum") {
-        console.log("artists select ", artistSelect)
-        albumTypeFieldsDiv.innerHTML = `${artistSelect.outerHTML}`
+    else if (type == "BEST_OF_YEAR") {
+        compilationTypeFieldsDiv.innerHTML = `
+            <label>Año</label>
+            <select id="añoSelect" onchange="fecthSongs('BEST_OF_YEAR', value)">
+                <option value="2011">2011</option>
+                <option value="2012">2012</option>
+                <option value="2013">2013</option>
+                <option value="2014">2014</option>
+                <option value="2015">2015</option>
+            </select>
+        `
+        title.value = "Best of XXXX"
+        fecthSongs(type, 2011)
     }
     else {
-
+        compilationTypeFieldsDiv.innerHTML = `
+            <label>Género</label>            
+        `
+        compilationTypeFieldsDiv.appendChild(genreSelect)
+        title.value = "Best of XXXXXX"
+        fecthSongs(type, "UNKNOWN")
     }
 }
 
 const create = () => {
-    const type = document.getElementById("type").value
+    const compilationType = document.getElementById("compilationType").value
 
-    const title = "titulo"//document.getElementById("title").value
+    const title = document.getElementById("title").value
     const songs = readSongs()//{1: {songId: 3}, 2: {songId: 7}}//readSongs()
     const releaseDate = "2000-06-06"//document.getElementById("releaseDate").value
     const catalogNumber = "MC100"//document.getElementById("catalogNumber").value
-
-    if (type == 0) {
-        
-    }
     
     const request = new XMLHttpRequest()
     const url = "http://localhost:8080/api/album"
@@ -121,7 +136,8 @@ const create = () => {
         songs: songs,
         releaseDate: releaseDate,
         catalogNumber: catalogNumber,
-        type: type
+        type: "compilationAlbum",
+        compilationType: compilationType
     }
 
     console.log("album ", album)

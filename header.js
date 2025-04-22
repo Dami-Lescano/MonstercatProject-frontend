@@ -21,7 +21,7 @@ let header = `
             <a href="createArtist.html">Crear Artista</a>
         </li>
         <li>
-            <a href="createAlbum.html">Crear Álbum</a>
+            <a href="createCompilationAlbum.html">Crear Álbum Compilatorio</a>
         </li>
     </ul>`
 document.getElementById("header").innerHTML = header
