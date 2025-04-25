@@ -23,5 +23,8 @@ let header = `
         <li>
             <a href="createCompilationAlbum.html">Crear Álbum Compilatorio</a>
         </li>
+        <li>
+            <a href="createArtistAlbum.html">Crear Álbum de Artista</a>
+        </li>
     </ul>`
 document.getElementById("header").innerHTML = header
