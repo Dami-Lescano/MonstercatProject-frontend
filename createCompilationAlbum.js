@@ -125,8 +125,8 @@ const create = () => {
 
     const title = document.getElementById("title").value
     const songs = readSongs()//{1: {songId: 3}, 2: {songId: 7}}//readSongs()
-    const releaseDate = "2000-06-06"//document.getElementById("releaseDate").value
-    const catalogNumber = "MC100"//document.getElementById("catalogNumber").value
+    const releaseDate = document.getElementById("releaseDate").value
+    const catalogNumber = document.getElementById("catalogNumber").value
     
     const request = new XMLHttpRequest()
     const url = "http://localhost:8080/api/album"
