@@ -1,23 +1,45 @@
-const request = new XMLHttpRequest()
-const url = "http://localhost:8080/api/album/albumsList"
-request.open('GET', url)
-request.send()
+const requestCompilation = new XMLHttpRequest()
+requestCompilation.open('GET', "http://localhost:8080/api/album/compilationAlbum/list")
+requestCompilation.send()
 
-request.addEventListener("readystatechange", () => {
-    if(request.readyState === 4){
-        if(request.status == 200){
+requestCompilation.addEventListener("readystatechange", () => {
+    if(requestCompilation.readyState === 4){
+        if(requestCompilation.status == 200){
             let albumsList = ''
-            const albums = JSON.parse(request.response)
+            const albums = JSON.parse(requestCompilation.response)
 
             albums.forEach(element => {
-                albumsList += `<p><a href="album.html?albumId=${element.id}">${element.title}</a></p>`
+                albumsList += `<p><a href="album.html?albumId=${element.id}&albumType=${element.type}">${element.title}</a></p>`
                 
             })
 
-            document.getElementById("list").innerHTML = albumsList
+            document.getElementById("compilationAlbumList").innerHTML = albumsList
         }
         else {
-            document.getElementById("list").innerHTML = "Error " + request.status
+            document.getElementById("compilationAlbumList").innerHTML = "Error " + requestCompilation.status
+        }
+    }
+})
+
+const requestArtist = new XMLHttpRequest()
+requestArtist.open('GET', "http://localhost:8080/api/album/artistAlbum/list")
+requestArtist.send()
+
+requestArtist.addEventListener("readystatechange", () => {
+    if(requestArtist.readyState === 4){
+        if(requestArtist.status == 200){
+            let albumsList = ''
+            const albums = JSON.parse(requestArtist.response)
+
+            albums.forEach(element => {
+                albumsList += `<p><a href="album.html?albumId=${element.id}&albumType=${element.type}">${element.title}</a></p>`
+                
+            })
+
+            document.getElementById("artistAlbumList").innerHTML = albumsList
+        }
+        else {
+            document.getElementById("artistAlbumList").innerHTML = "Error " + requestArtist.status
         }
     }
 })
