@@ -14,11 +14,11 @@ request.addEventListener("readystatechange", () =>{
             song += `
                         <img src="monstercat-placeholder.png" height="250">
                         <h2 >Título: ${response.title}</h2>
-                        <h2 >Artista/s: ${response.artists}</h2>
-                        ${response.featuredArtists.length > 0 ? `<h2 >Artistas colaboradores: ${response.featuredArtists}</h2>` : ""}
-                        ${response.remixers.length > 0 ? `<h2 >Remixers: ${response.remixers}</h2>` : ""}
+                        <h2 >Artista/s: ${artistsToString(response.artists)}</h2>
+                        ${response.featuredArtists.length > 0 ? `<h2 >Artistas colaboradores: ${artistsToString(response.featuredArtists)}</h2>` : ""}
+                        ${response.remixers.length > 0 ? `<h2 >Remixers: ${artistsToString(response.remixers)}</h2>` : ""}
                         <h2 >Duración: ${response.length}</h2>
-                        <h2 >Género: ${response.genre}</h2>
+                        <h2 >Género: ${response.genreName}</h2>
                         <h2 >Fecha de Lanzamiento: ${response.releaseDate}</h2>
                         <h2 >Número de catálogo: ${response.catalogNumber == null ? "N/A" : `${response.catalogNumber}`}</h2>
                         <h2 >ID: ${response.songId}</h2>
@@ -31,3 +31,16 @@ request.addEventListener("readystatechange", () =>{
     }
     
 })
+
+const artistsToString = (artists) => {
+    const artistsNames = []
+    artists.forEach(artist => {
+        artistsNames.push(artist.artistName)
+    })
+
+    return artistsNames
+}
+
+const navigateToModify = () => {
+    location.href = `modifySong.html?songId=${songId}`
+}

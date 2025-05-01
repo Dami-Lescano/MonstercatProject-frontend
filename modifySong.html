@@ -11,7 +11,7 @@
             <script src="header.js"></script>
         </header>
         <section>
-            <h2>Alta de canción</h2>
+            <h2>Modificación de canción</h2>
             <form id="songForm">
                 <p>Título</p>
                 <input type="text" placeholder="Ingrese un título" id="title">
@@ -45,11 +45,11 @@
                 <input type="text" placeholder="Ingrese el Número de catálogo" id="catalogNumber">
             </form>
             <div id="buttons">
-                <button onclick="location.reload()">Cancelar</button>
-                <button onclick="create()">Crear</button>
+                <button onclick="navigateToInfo()">Cancelar</button>
+                <button onclick="modify()">Modificar</button>
             </div>
         </section>
         
-        <script src="createSong.js"></script>
+        <script src="modifySong.js"></script>
     </body>
 </html>
