@@ -29,3 +29,7 @@ request.addEventListener("readystatechange", () =>{
     }
     
 })
+
+const navigateToModify = () => {
+    location.href = `modifyArtist.html?artistId=${artistId}`
+}

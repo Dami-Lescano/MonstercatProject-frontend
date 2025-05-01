@@ -1,14 +1,46 @@
+const urlParams = new URLSearchParams(window.location.search);
+const artistId = urlParams.get('artistId');
+
 var namesId = 100
 var namesChipsIds = []
 
-const request = new XMLHttpRequest()
-const url = "http://localhost:8080/api/enums/countries"
-request.open('GET', url)
-request.send()
-request.addEventListener("readystatechange", () => {
-    if(request.readyState === 4){
-        if(request.status == 200){
-            const genres = JSON.parse(request.response)
+const setInputValue = (field, value) => {
+    const fieldInput = document.getElementById(field)
+    fieldInput.value = value
+}
+
+const requestArtist = new XMLHttpRequest()
+requestArtist.open('GET', `http://localhost:8080/api/artist/${artistId}`)
+requestArtist.send()
+
+requestArtist.addEventListener("readystatechange", () =>{
+    if(requestArtist.readyState === 4){
+        if(requestArtist.status == 200){
+            const response = JSON.parse(requestArtist.response)
+
+            setInputValue("artistName", response.artistName)
+            setInputValue("birthDate", response.birthDate)
+            setInputValue("country", response.country)
+            setInputValue("initYear", response.initYear)
+            setInputValue("endYear", response.endYear)
+
+            fillNames(response.realName)
+
+        }
+        else{
+            document.getElementById("artist").innerHTML = "Error " + requestArtist.status
+        }
+    }
+    
+})
+
+const requestCountries = new XMLHttpRequest()
+requestCountries.open('GET', "http://localhost:8080/api/enums/countries")
+requestCountries.send()
+requestCountries.addEventListener("readystatechange", () => {
+    if(requestCountries.readyState === 4){
+        if(requestCountries.status == 200){
+            const genres = JSON.parse(requestCountries.response)
             genres.forEach(element => {
                 var select = document.getElementById("country")
                 var option = document.createElement("option")
@@ -23,7 +55,7 @@ request.addEventListener("readystatechange", () => {
     }
 })
 
-const create = () => {
+const modify = () => {
     const artistName = document.getElementById("artistName").value
     const realName = readNames()
     const birthDate = document.getElementById("birthDate").value
@@ -40,24 +72,24 @@ const create = () => {
         country: country,
         birthDate: birthDate,
         initYear: initYear,
-        endYear: endYear
+        endYear: endYear,
+        artistId: artistId
     }
 
     console.log("artist ", artist)
 
-    request.open('POST', url)
+    request.open('PUT', url)
     request.setRequestHeader('Content-Type', 'application/json')
     let body = JSON.stringify(artist)
     request.send(body)
     console.log("body ", body)
     
     request.addEventListener("readystatechange", () =>{
-        //let user_string = ''
         if(request.readyState === 4){
             if(request.status == 200){
                 console.log(request.response)
-                alert("Artista creado exitosamente")
-                location.reload(false)
+                alert("Artista modificado exitosamente")
+                location.href = "artist.html?artistId=" + artistId
             }
             else {
                 alert("algo salio mal")
@@ -93,6 +125,15 @@ const addName = () => {
 
 }
 
+const fillNames = (names) => {
+    const nameInput = document.getElementById("realName")
+    names.forEach(name => {
+        nameInput.value = name
+        addName()
+    })
+    
+}
+
 const readNames = () => {
     const names = []
     namesChipsIds.forEach(id => {
@@ -107,4 +148,8 @@ const removeName = (id) => {
     document.getElementById(id).remove()
     namesChipsIds = namesChipsIds.filter(c => c != id)
     console.log("ids", namesChipsIds)
+}
+
+const navigateToInfo = () => {
+    location.href = "artist.html?artistId=" + artistId
 }
