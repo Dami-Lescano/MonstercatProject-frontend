@@ -47,3 +47,7 @@ request.addEventListener("readystatechange", () =>{
     }
     
 })
+
+const navigateToModify = () => {
+    location.href = "modify" + albumType + ".html?albumId=" + albumId + "&albumType=" + albumType
+}

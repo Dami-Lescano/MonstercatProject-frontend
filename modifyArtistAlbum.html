@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Monstercat Project - Song</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+        <header id="header">
+            <script src="header.js"></script>
+        </header>
+        <section>
+            <h2>Modificación de Álbum de Artista</h2>
+            <form id="albumForm">
+                <label for="albumForm"></label>
+                <div id="artists">
+                    <select name="artistSelect" id="artistSelect"></select>
+                    <button type="button" onclick="addArtist()">Agregar Artista</button>
+                </div>
+                <p>Título</p>
+                <input type="text" placeholder="Ingrese un título" id="title">
+                <p>Canciones</p>
+                <div id="songs">
+                    <select id="songSelect">
+                        <option value="0">Seleccione un artista o más</option>
+                    </select>
+                    <button type="button" onclick="addSong()">Agregar Canción</button>
+                    <div id="addedSongs"></div>
+                </div>
+                <p>Fecha de lanzamiento</p>
+                <input type="date" placeholder="Ingrese una fecha de lanzamiento" id="releaseDate">
+                <p>Número de Catálogo</p>
+                <input type="text" placeholder="Ingrese el Número de catálogo" id="catalogNumber">
+            </form>
+            <div id="buttons">
+                <button onclick="navigateToInfo()">Cancelar</button>
+                <button onclick="modify()">Modificar</button>
+            </div>
+        </section>
+        
+        <script src="modifyArtistAlbum.js"></script>
+    </body>
+</html>
